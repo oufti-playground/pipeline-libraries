@@ -8,7 +8,7 @@ def call(String workerImageName, String registryUrl) {
     node('docker') {
       GIT_SHORT_CHANGESET = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
       FULL_REGISTRY_IMAGE_NAME="${registryUrl}/${workerImageName}:${GIT_SHORT_CHANGESET}"
-      sh "docker tag ${workerImageName} ${FULL_REGISTRY_IMAGE_NAME}"
+      sh "docker tag ${workerImageName}:${GIT_SHORT_CHANGESET} ${FULL_REGISTRY_IMAGE_NAME}"
       sh "docker push ${FULL_REGISTRY_IMAGE_NAME}"
     }
   }
